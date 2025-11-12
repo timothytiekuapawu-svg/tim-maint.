@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Timothy Tieku Electrical — Maintenance Booking</title>
-<link rel="icon" href="favicon.ico" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -153,15 +152,15 @@ textarea{min-height:120px; resize:vertical;}
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-emailjs.init("ad1dHGUf_gonZ5ERG"); // <-- replace with your public key
+emailjs.init("ad1dHGUf_gonZ5ERG"); // <-- replace
 
-// Step controls
 const page1=document.getElementById('page1');
 const page2=document.getElementById('page2');
 const page3=document.getElementById('page3');
 const progBar=document.getElementById('progBar');
 const form=document.getElementById('maintForm');
 
+// Step control buttons
 document.getElementById('toStep2').addEventListener('click',()=>{
   const name=document.getElementById('user_name').value.trim();
   const phone=document.getElementById('user_phone').value.trim();
