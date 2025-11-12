@@ -1,301 +1,569 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Electrical Maintenance Booking</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Joseph Turkson Electrical — Maintenance Booking</title>
 
-  <!-- Favicon / Website Icon -->
+  <!-- favicon (optional) -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="icon" href="favicon.png" type="image/png">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" sizes="192x192" href="android-chrome-192x192.png">
+
+  <!-- Google font (Poppins) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      color: #fff;
-      background: url('A_photograph_of_a_Caucasian_electrician_with_a_lig.png') no-repeat center center/cover;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow-x: hidden;
-      position: relative;
+    :root{
+      --accent-1: #ffd700;
+      --accent-2: #ff8a00;
+      --glass-bg: rgba(255,255,255,0.12);
+      --glass-border: rgba(255,255,255,0.18);
+      --muted: rgba(255,255,255,0.85);
+      --max-width: 980px;
+    }
+    /* Reset & base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      color:#fff;
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#111;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      z-index: -1;
+    /* Slideshow background */
+    .slideshow {
+      position:fixed;
+      inset:0;
+      z-index:-3;
+      overflow:hidden;
+    }
+    .slideshow img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0;
+      transform:scale(1.02);
+      transition:opacity 1.2s ease, transform 10s linear;
+      will-change:opacity,transform;
+    }
+    .slideshow img.active{
+      opacity:1;
+      transform:scale(1);
     }
 
-    .container {
-      max-width: 700px;
-      width: 90%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    /* dark overlay to improve contrast */
+    .bg-overlay {
+      position:fixed;
+      inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,0.42), rgba(0,0,0,0.46));
+      z-index:-2;
     }
 
-    h1 {
-      text-align: center;
-      color: #ffd700;
-      margin-bottom: 10px;
+    /* Main container (frosted glass) */
+    .wrap{
+      width:100%;
+      max-width:var(--max-width);
+      margin:36px;
+      padding:28px;
+      border-radius:14px;
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      backdrop-filter: blur(10px) saturate(120%);
+      box-shadow:0 10px 30px rgba(0,0,0,0.6);
     }
 
-    p.note {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #ddd;
+    header.top{
+      display:flex;
+      gap:16px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo {
+      width:56px;
+      height:56px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#000;
+      font-weight:700;
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+      font-size:20px;
+    }
+    h1{margin:0;font-size:1.15rem;color:var(--accent-1)}
+    .subtitle{font-size:0.9rem;color:var(--muted);margin-top:4px}
+
+    .contact {
+      text-align:right;
+      font-size:0.95rem;
+      color:var(--muted);
+    }
+    .contact a{color:var(--muted); text-decoration:none; font-weight:600}
+
+    /* Grid layout for card */
+    .card {
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:28px;
+      align-items:start;
+    }
+    @media (max-width:980px){
+      .card{grid-template-columns:1fr; padding:0}
+      .wrap{padding:20px}
     }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    /* Left column: form area */
+    .form-shell{
+      padding:6px 0 0 0;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
+    .progress {
+      height:10px;
+      background:rgba(255,255,255,0.06);
+      border-radius:8px;
+      overflow:hidden;
+      margin-bottom:18px;
+      display:flex;
+      align-items:center;
+    }
+    .progress > span{
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      width:0%;
+      transition:width 400ms ease;
     }
 
-    label {
-      font-weight: bold;
-      margin-bottom: 5px;
+    form{display:flex;flex-direction:column;gap:16px}
+    .row{
+      display:flex;
+      gap:12px;
+    }
+    .col{flex:1;display:flex;flex-direction:column;gap:8px}
+    label{font-size:0.85rem;color:var(--muted);font-weight:600}
+    input[type="text"],input[type="email"],input[type="tel"],input[type="datetime-local"],select,textarea{
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid rgba(0,0,0,0.12);
+      font-size:0.97rem;
+      background:rgba(255,255,255,0.95);
+      color:#111;
+      outline:none;
+    }
+    textarea{min-height:110px; resize:vertical}
+
+    .muted-note{font-size:0.86rem;color:rgba(255,255,255,0.85)}
+
+    .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-start;
+      margin-top:6px;
+      flex-wrap:wrap;
+    }
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 16px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      font-size:0.95rem;
+      transition:transform 160ms ease;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      color:#000;
+      box-shadow:0 8px 20px rgba(255,138,0,0.12);
+    }
+    .btn-ghost{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.12);
+      color:var(--muted);
+    }
+    .btn:active{transform:translateY(1px)}
+
+    .whatsapp {
+      display:inline-block;
+      text-decoration:none;
+      background:#25D366;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:700;
     }
 
-    input, select, textarea {
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.9);
-      color: #000;
+    /* Right column: info / guarantee */
+    .info {
+      background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12));
+      border-radius:12px;
+      padding:18px;
+      min-height:260px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      justify-content:flex-start;
+    }
+    .info h3{margin:0;color:var(--accent-1); font-size:1rem}
+    .bullet{display:flex;gap:10px;align-items:flex-start}
+    .bullet strong{display:block;color:var(--muted)}
+    .trust{
+      margin-top:auto;
+      font-size:0.9rem;
+      color:var(--muted);
+      border-top:1px dashed rgba(255,255,255,0.06);
+      padding-top:12px;
     }
 
-    textarea {
-      width: 100%;
-      resize: vertical;
-      margin-top: 10px;
-    }
+    #statusMsg{min-height:22px;font-weight:700}
 
-    .buttons {
-      text-align: center;
-      margin-top: 25px;
+    footer.site-foot{
+      margin-top:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      color:rgba(255,255,255,0.8);
+      font-size:0.9rem;
     }
-
-    button {
-      background: linear-gradient(135deg, #ffcc00, #ff8800);
-      border: none;
-      border-radius: 8px;
-      padding: 12px 25px;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-      margin: 5px;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      background: linear-gradient(135deg, #ffd633, #ffa31a);
-    }
-
-    .whatsapp-btn {
-      display: inline-block;
-      background-color: #25D366;
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: bold;
-      margin: 5px;
-    }
-
-    .whatsapp-btn:hover {
-      background-color: #20b358;
-    }
-
-    #statusMsg {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 1rem;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #ccc;
-      font-size: 0.9rem;
-    }
-
-    .form-page {
-      display: none;
-    }
-
-    .form-page.active {
-      display: block;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 25px;
-      }
+    @media (max-width:600px){
+      footer.site-foot{flex-direction:column;align-items:flex-start}
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
 
-  <div class="container">
-    <h1>⚡ Electrical Maintenance Booking Form</h1>
-    <p class="note">Fill this form to request maintenance. You can preview and chat with us directly on WhatsApp.</p>
-
-    <form id="maintForm">
-      <!-- Step 1 -->
-      <div class="form-page active" id="page1">
-        <div class="form-group">
-          <label for="user_name">Full Name</label>
-          <input type="text" id="user_name" name="user_name" required>
-        </div>
-
-        <div class="form-group">
-          <label for="user_phone">Phone Number</label>
-          <input type="tel" id="user_phone" name="user_phone" required>
-        </div>
-
-        <div class="form-group">
-          <label for="maintenance_type">Type of Maintenance</label>
-          <select id="maintenance_type" name="maintenance_type" required>
-            <option value="">-- Select --</option>
-            <option>Wiring fault / repair</option>
-            <option>Rewiring / new connection</option>
-            <option>Lighting / fan installation</option>
-            <option>Socket outlet installation</option>
-            <option>Fuse box / circuit breaker</option>
-            <option>Generator / inverter</option>
-            <option>Appliance connection</option>
-            <option>Solar PV / battery system</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <div class="buttons">
-          <button type="button" id="nextBtn">Next ➡</button>
-        </div>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="form-page" id="page2">
-        <div class="form-group">
-          <label for="user_email">Email</label>
-          <input type="email" id="user_email" name="user_email" required>
-        </div>
-
-        <div class="form-group">
-          <label for="audience_level">Priority Level</label>
-          <select id="audience_level" name="audience_level" required>
-            <option value="">-- Select Priority --</option>
-            <option>Low (Flexible)</option>
-            <option>Medium (2–3 Days)</option>
-            <option>High (Urgent)</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="preferred_datetime">Preferred Date & Time</label>
-          <input type="datetime-local" id="preferred_datetime" name="preferred_datetime">
-        </div>
-
-        <div class="form-group">
-          <label for="message">Describe the Problem</label>
-          <textarea id="message" name="message" rows="4" placeholder="Describe your issue in detail..."></textarea>
-        </div>
-
-        <div class="buttons">
-          <button type="button" id="prevBtn">⬅ Back</button>
-          <button type="submit">Send Request</button>
-          <a href="https://api.whatsapp.com/send?phone=233543899210&text=Hello%20Engineer%20Timothy%2C%20I%20want%20to%20book%20an%20electrical%20maintenance%20service."
-             target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a>
-        </div>
-        <p id="statusMsg"></p>
-      </div>
-    </form>
+  <!-- background slideshow (10 images) -->
+  <div class="slideshow" aria-hidden="true">
+    <!-- Use your generated images: put real files in /images/ named electrician1.jpg ... electrician10.jpg -->
+    <img src="images/electrician1.jpg" class="active" alt="">
+    <img src="images/electrician2.jpg" alt="">
+    <img src="images/electrician3.jpg" alt="">
+    <img src="images/electrician4.jpg" alt="">
+    <img src="images/electrician5.jpg" alt="">
+    <img src="images/electrician6.jpg" alt="">
+    <img src="images/electrician7.jpg" alt="">
+    <img src="images/electrician8.jpg" alt="">
+    <img src="images/electrician9.jpg" alt="">
+    <img src="images/electrician10.jpg" alt="">
   </div>
 
-  <footer>
-    <p><strong>About Us:</strong> We specialize in wiring, rewiring, installation, troubleshooting, maintenance, and blueprint reading for electrical systems. Contact us: 0543 89 92 10</p>
-  </footer>
+  <div class="bg-overlay" aria-hidden="true"></div>
 
-  <!-- EmailJS -->
+  <main class="wrap" role="main" aria-labelledby="pageTitle">
+    <header class="top">
+      <div class="brand" aria-hidden="false">
+        <div class="logo">JT</div>
+        <div>
+          <h1 id="pageTitle">Joseph Turkson Electrical</h1>
+          <div class="subtitle">Fast • Trusted • Professional electrical maintenance</div>
+        </div>
+      </div>
+      <div class="contact">
+        <div>Call / WhatsApp: <a href="tel:+233543899210">+233 54 389 9210</a></div>
+        <div class="muted-note">Based in Accra — Available Mon–Sat</div>
+      </div>
+    </header>
+
+    <section class="card" aria-label="Booking card">
+      <!-- left: form -->
+      <div class="form-shell" aria-hidden="false">
+        <div class="progress" aria-hidden="false"><span id="progBar" style="width:50%"></span></div>
+
+        <form id="maintForm" novalidate>
+          <!-- Page 1 -->
+          <div class="page" id="page1" data-step="1" aria-hidden="false">
+            <div class="row">
+              <div class="col">
+                <label for="user_name">Full name</label>
+                <input id="user_name" type="text" name="user_name" required placeholder="e.g., John Doe">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="user_phone">Phone number</label>
+                <input id="user_phone" type="tel" name="user_phone" required placeholder="+233 54 389 9210">
+              </div>
+              <div class="col">
+                <label for="maintenance_type">Type of maintenance</label>
+                <select id="maintenance_type" name="maintenance_type" required>
+                  <option value="">— Choose service —</option>
+                  <option>Wiring fault / repair</option>
+                  <option>Rewiring / new connection</option>
+                  <option>Lighting / fan installation</option>
+                  <option>Socket outlet installation</option>
+                  <option>Fuse box / circuit breaker</option>
+                  <option>Generator / inverter</option>
+                  <option>Appliance connection</option>
+                  <option>Solar PV / battery system</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="btn btn-primary" id="toStep2">Next ➡</button>
+              <a class="whatsapp" id="whatsNow" href="https://api.whatsapp.com/send?phone=233543899210&text=Hello%20Engineer%20Joseph%2C%20I%20need%20electrical%20assistance." target="_blank" rel="noopener">💬 Quick WhatsApp</a>
+              <div style="margin-left:auto" class="muted-note">Step 1 of 2</div>
+            </div>
+          </div>
+
+          <!-- Page 2 -->
+          <div class="page" id="page2" data-step="2" style="display:none" aria-hidden="true">
+            <div class="row">
+              <div class="col">
+                <label for="user_email">Email address</label>
+                <input id="user_email" type="email" name="user_email" placeholder="you@example.com" required>
+              </div>
+              <div class="col">
+                <label for="audience_level">Priority</label>
+                <select id="audience_level" name="audience_level" required>
+                  <option value="">— Priority —</option>
+                  <option>Low (Flexible)</option>
+                  <option>Medium (2–3 Days)</option>
+                  <option>High (Urgent)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="preferred_datetime">Preferred date &amp; time</label>
+                <input id="preferred_datetime" type="datetime-local" name="preferred_datetime">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="message">Describe the problem</label>
+                <textarea id="message" name="message" placeholder="Describe your issue, add locations or part numbers..."></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="btn btn-ghost" id="backTo1">⬅ Back</button>
+              <button type="submit" class="btn btn-primary">Send Request</button>
+              <a class="whatsapp" id="whatsLater" href="https://api.whatsapp.com/send?phone=233543899210&text=Hello%20Engineer%20Timothy%2C%20I%20have%20completed%20the%20booking%20form." target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+              <div style="margin-left:auto;color:var(--muted);font-weight:600">Step 2 of 2</div>
+            </div>
+
+            <p id="statusMsg" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- right: info panel -->
+      <aside class="info" aria-hidden="false">
+        <h3>How it works</h3>
+        <div class="bullet">
+          <div style="width:12px;height:12px;border-radius:3px;background:var(--accent-1)"></div>
+          <div><strong>Quick booking:</strong> Fill the short form — we receive your details instantly.</div>
+        </div>
+
+        <div class="bullet">
+          <div style="width:12px;height:12px;border-radius:3px;background:var(--accent-1)"></div>
+          <div><strong>Transparent communication:</strong> We'll confirm availability & give an estimate before we start work.</div>
+        </div>
+
+        <div class="bullet">
+          <div style="width:12px;height:12px;border-radius:3px;background:var(--accent-1)"></div>
+          <div><strong>Experienced team:</strong> Wiring, rewiring, socket installation, fuse/circuit troubleshooting, solar & inverters.</div>
+        </div>
+
+        <div class="trust">
+          <div><strong>Contact</strong></div>
+          <div>Joseph Turkson — <a href="tel:+233543899210">+233 54 389 9210</a></div>
+          <div style="margin-top:8px"><strong>Service area:</strong> Accra & surrounding areas (update in settings)</div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="site-foot" aria-hidden="false">
+      <div>© <strong>Joseph Turkson Electrical</strong> — Trusted electrical maintenance</div>
+      <div>Need help? <a href="mailto:support@yourdomain.com" style="color:var(--muted);text-decoration:underline;">support@yourdomain.com</a></div>
+    </footer>
+  </main>
+
+  <!-- EmailJS (replace your keys) -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    emailjs.init("g5ulqlDwp0QDcjdat"); // Replace with your public key
-
-    const page1 = document.getElementById("page1");
-    const page2 = document.getElementById("page2");
-    const nextBtn = document.getElementById("nextBtn");
-    const prevBtn = document.getElementById("prevBtn");
-
-    nextBtn.addEventListener("click", () => {
-      if (document.getElementById("user_name").value && 
-          document.getElementById("user_phone").value && 
-          document.getElementById("maintenance_type").value) {
-        page1.classList.remove("active");
-        page2.classList.add("active");
-      } else {
-        alert("Please fill all fields in Step 1.");
+    /* ---------- Slideshow logic ---------- */
+    (function(){
+      const slides = document.querySelectorAll('.slideshow img');
+      let idx = 0;
+      function show(i){
+        slides.forEach((s)=>s.classList.remove('active'));
+        slides[i].classList.add('active');
       }
+      // if you only have 1 image, the code still cycles
+      setInterval(()=>{
+        idx = (idx + 1) % slides.length;
+        show(idx);
+      }, 6000);
+    })();
+
+    /* ---------- Form step logic ---------- */
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+    const toStep2 = document.getElementById('toStep2');
+    const backTo1 = document.getElementById('backTo1');
+    const prog = document.getElementById('progBar');
+
+    function goToStep(step){
+      if(step===1){
+        page1.style.display='';
+        page1.setAttribute('aria-hidden','false');
+        page2.style.display='none';
+        page2.setAttribute('aria-hidden','true');
+        prog.style.width='50%';
+      } else {
+        page1.style.display='none';
+        page1.setAttribute('aria-hidden','true');
+        page2.style.display='';
+        page2.setAttribute('aria-hidden','false');
+        prog.style.width='100%';
+        page2.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    }
+
+    toStep2.addEventListener('click', ()=>{
+      // simple front-end validation for step 1
+      const name = document.getElementById('user_name').value.trim();
+      const phone = document.getElementById('user_phone').value.trim();
+      const type = document.getElementById('maintenance_type').value;
+      if(!name || !phone || !type){
+        alert('Please fill Full name, Phone and choose a Maintenance type to continue.');
+        return;
+      }
+      goToStep(2);
     });
 
-    prevBtn.addEventListener("click", () => {
-      page2.classList.remove("active");
-      page1.classList.add("active");
-    });
+    backTo1.addEventListener('click', ()=>goToStep(1));
 
-    document.getElementById("maintForm").addEventListener("submit", function(event) {
-      event.preventDefault();
+    /* ---------- EmailJS submit ---------- */
+    (function(){
+      // init
+      try{
+        emailjs.init("g5ulqlDwp0QDcjdat"); // <--- replace
+      }catch(e){
+        // emailjs absent or blocked - graceful
+        console.warn('EmailJS init failed or blocked.', e);
+      }
 
-      const serviceID = "service_972cf37";  // Replace
-      const templateID = "template_vd62hbr"; // Replace
+      const form = document.getElementById('maintForm');
+      const statusMsg = document.getElementById('statusMsg');
 
-      const templateParams = {
-        user_name: document.getElementById("user_name").value,
-        user_email: document.getElementById("user_email").value,
-        user_phone: document.getElementById("user_phone").value,
-        maintenance_type: document.getElementById("maintenance_type").value,
-        audience_level: document.getElementById("audience_level").value,
-        preferred_datetime: document.getElementById("preferred_datetime").value,
-        message: document.getElementById("message").value
-      };
+      form.addEventListener('submit', function(ev){
+        ev.preventDefault();
 
-      const statusMsg = document.getElementById("statusMsg");
-      statusMsg.textContent = "Sending...";
-      statusMsg.style.color = "#ffd700";
+        // basic validation step 2
+        const email = document.getElementById('user_email').value.trim();
+        const priority = document.getElementById('audience_level').value;
+        if(!email || !priority){
+          alert('Please provide your email and select priority before sending.');
+          return;
+        }
 
-      emailjs.send(serviceID, templateID, templateParams)
-        .then(() => {
-          statusMsg.textContent = "✅ Request sent successfully! We’ll contact you soon.";
-          statusMsg.style.color = "#00ff90";
-          document.getElementById("maintForm").reset();
-          page2.classList.remove("active");
-          page1.classList.add("active");
-        })
-        .catch((err) => {
-          console.error(err);
-          statusMsg.textContent = "❌ Failed to send. Please check your network or EmailJS setup.";
-          statusMsg.style.color = "red";
+        // prepare params
+        const templateParams = {
+          user_name: document.getElementById('user_name').value.trim(),
+          user_phone: document.getElementById('user_phone').value.trim(),
+          maintenance_type: document.getElementById('maintenance_type').value,
+          user_email: email,
+          audience_level: priority,
+          preferred_datetime: document.getElementById('preferred_datetime').value || 'Not specified',
+          message: document.getElementById('message').value.trim() || 'No description provided'
+        };
+
+        // show sending
+        statusMsg.style.color = 'var(--accent-1)';
+        statusMsg.textContent = 'Sending request...';
+
+        // send via EmailJS
+        const serviceID = 'service_972cf37'; // replace
+        const templateID = 'template_vd62hbr'; // replace
+
+        // If EmailJS is not loaded/initialized, skip and simulate success
+        if(typeof emailjs === 'undefined' || !emailjs.send){
+          console.warn('EmailJS not available — form not sent. Simulating success for demo.');
+          statusMsg.style.color = '#00ff90';
+          statusMsg.textContent = '✅ Request recorded (demo). Please configure EmailJS keys to enable real emails.';
+          form.reset();
+          goToStep(1);
+          return;
+        }
+
+        emailjs.send(serviceID, templateID, templateParams)
+          .then(() => {
+            statusMsg.style.color = '#00ff90';
+            statusMsg.textContent = '✅ Request sent successfully! We will contact you shortly.';
+            form.reset();
+            goToStep(1);
+          })
+          .catch((err) => {
+            console.error('EmailJS error:', err);
+            statusMsg.style.color = '#ff7b7b';
+            statusMsg.textContent = '❌ Failed to send — check console and your EmailJS setup.';
+          });
+
+      });
+    })();
+
+    /* ---------- Prefill WhatsApp messages with collected values ---------- */
+    (function(){
+      const whatsNow = document.getElementById('whatsNow');
+      const whatsLater = document.getElementById('whatsLater');
+
+      function encodeMsg(o){
+        return encodeURIComponent(Hello Engineer Joseph, my name is ${o.name||'[name]'} and I need ${o.type||'electrical assistance'}. Phone: ${o.phone||'[phone]'}.);
+      }
+
+      const nameInput = document.getElementById('user_name');
+      const phoneInput = document.getElementById('user_phone');
+      const typeInput = document.getElementById('maintenance_type');
+
+      function updateNowLink(){
+        whatsNow.href = 'https://api.whatsapp.com/send?phone=233543899210&text=' + encodeMsg({
+          name: nameInput.value.trim(),
+          phone: phoneInput.value.trim(),
+          type: typeInput.value
         });
-    });
+      }
+      function updateLaterLink(){
+        const emailVal = document.getElementById('user_email') ? document.getElementById('user_email').value.trim() : '';
+        const priorityVal = document.getElementById('audience_level') ? document.getElementById('audience_level').value : '';
+        whatsLater.href = 'https://api.whatsapp.com/send?phone=233543899210&text=' + encodeURIComponent(
+          Hello Engineer Joseph, I have sent a booking request. Name: ${nameInput.value.trim() || '[name]'}, Phone: ${phoneInput.value.trim() || '[phone]'}, Email: ${emailVal || '[email]'}, Priority: ${priorityVal || '[priority]'}
+        );
+      }
+
+      [nameInput,phoneInput,typeInput].forEach(el=>el.addEventListener('input', updateNowLink));
+      document.addEventListener('input', updateLaterLink);
+
+      // init
+      updateNowLink();
+      updateLaterLink();
+    })();
   </script>
 </body>
-
 </html>
