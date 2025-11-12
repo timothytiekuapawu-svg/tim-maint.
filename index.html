@@ -12,7 +12,6 @@
   --accent-2: #ff8a00;
   --accent-3: #ff3d00;
   --accent-4: #00d4ff;
-  --accent-5: #ff00ff;
   --glass-bg: rgba(255,255,255,0.18);
   --glass-border: rgba(255,255,255,0.3);
   --muted: rgba(255,255,255,0.85);
@@ -28,12 +27,6 @@ body{
   overflow-x:hidden;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-/* Main floating card */
 .wrap{
   width:95%;
   max-width:var(--max-width);
@@ -46,27 +39,17 @@ body{
   display:flex;
   flex-direction:column;
   gap:30px;
-  animation: fadeIn 1.2s ease forwards;
 }
 
-/* Header */
 h1{
   margin:0;
-  font-size:2.2rem;
+  font-size:2rem;
   background: linear-gradient(90deg,var(--accent-1),var(--accent-4));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.subtitle{font-size:1.1rem;color:var(--muted);}
-
-/* Form fields */
-label{
-  font-size:1rem;
-  font-weight:600;
-  color: var(--accent-4);
-  display:block;
-  margin-bottom:6px;
-}
+.subtitle{font-size:1rem;color:var(--muted);}
+label{font-size:1rem;font-weight:600;color:var(--accent-4);margin-bottom:6px;display:block;}
 input, select, textarea{
   width:100%;
   padding:14px 16px;
@@ -76,63 +59,27 @@ input, select, textarea{
   outline:none;
   background: rgba(255,255,255,0.95);
   color: #111;
-  transition: all 0.4s ease;
-  background-clip: padding-box;
+  margin-bottom:12px;
+  transition: all 0.3s ease;
 }
 input:focus, select:focus, textarea:focus{
-  border:2px solid var(--accent-5);
-  box-shadow: 0 0 20px rgba(255,0,255,0.4);
+  border:2px solid var(--accent-3);
+  box-shadow: 0 0 15px rgba(255,61,0,0.5);
 }
 textarea{min-height:120px; resize:vertical;}
-
-/* Actions */
-.actions{
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-.btn{
-  padding:14px 20px;
-  border-radius:15px;
-  font-weight:700;
-  cursor:pointer;
-  border:none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-primary{
-  background: linear-gradient(135deg,var(--accent-1),var(--accent-2));
-  color:#000;
-  box-shadow: 0 8px 25px rgba(255,138,0,0.5);
-}
-.btn-primary:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(255,138,0,0.7);
-}
-.btn-ghost{
-  background: linear-gradient(135deg,var(--accent-3),var(--accent-4));
-  color:#fff;
-  border:1px solid rgba(255,255,255,0.3);
-}
-.btn-ghost:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(0,212,255,0.5);
-}
-.whatsapp{
-  background:#25D366;
-  color:#fff;
-  text-decoration:none;
-  padding:14px 20px;
-  border-radius:15px;
-  font-weight:700;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+.actions{display:flex;gap:15px;flex-wrap:wrap;align-items:center;margin-top:10px;}
+.btn{padding:14px 20px;border-radius:15px;font-weight:700;cursor:pointer;border:none;transition: transform 0.2s ease, box-shadow 0.2s ease;}
+.btn-primary{background: linear-gradient(135deg,var(--accent-1),var(--accent-2)); color:#000; box-shadow:0 8px 25px rgba(255,138,0,0.5);}
+.btn-primary:hover{transform: translateY(-3px); box-shadow:0 15px 40px rgba(255,138,0,0.7);}
+.btn-ghost{background: linear-gradient(135deg,var(--accent-3),var(--accent-4)); color:#fff; border:1px solid rgba(255,255,255,0.3);}
+.btn-ghost:hover{transform: translateY(-3px); box-shadow:0 12px 35px rgba(0,212,255,0.5);}
+.whatsapp{background:#25D366;color:#fff;text-decoration:none;padding:14px 20px;border-radius:15px;font-weight:700;transition: transform 0.2s ease, box-shadow 0.2s ease;}
 .whatsapp:hover{transform:translateY(-3px); box-shadow:0 10px 25px rgba(37,211,102,0.5);}
-
-/* Status & info */
-#statusMsg{font-weight:700;height:28px;margin-top:10px;text-align:center; font-size:1rem;}
-.info{font-size:1rem;color:var(--muted);}
-.info strong{color:#fff;}
+#statusMsg{font-weight:700;height:28px;margin-top:10px;text-align:center;font-size:1rem;}
+.progress{height:10px;background:rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;margin-bottom:18px;}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));width:0%;transition:width 0.4s ease;}
+.page{display:none;}
+.page.active{display:block;}
 </style>
 </head>
 <body>
@@ -143,16 +90,15 @@ textarea{min-height:120px; resize:vertical;}
     <div class="subtitle">Fast • Trusted • Professional electrical maintenance</div>
   </div>
 
+  <div class="progress"><span id="progBar"></span></div>
+
   <form id="maintForm">
-    <div>
+    <!-- Step 1 -->
+    <div class="page active" id="page1">
       <label for="user_name">Full Name</label>
       <input id="user_name" type="text" name="user_name" placeholder="John Doe" required>
-    </div>
-    <div>
       <label for="user_phone">Phone Number</label>
       <input id="user_phone" type="tel" name="user_phone" placeholder="+233 54 389 9210" required>
-    </div>
-    <div>
       <label for="maintenance_type">Type of Maintenance</label>
       <select id="maintenance_type" name="maintenance_type" required>
         <option value="">— Choose service —</option>
@@ -166,12 +112,16 @@ textarea{min-height:120px; resize:vertical;}
         <option>Solar PV / battery system</option>
         <option>Other</option>
       </select>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="toStep2">Next ➡</button>
+        <a class="whatsapp" id="whatsNow" href="#" target="_blank">💬 Quick WhatsApp</a>
+      </div>
     </div>
-    <div>
+
+    <!-- Step 2 -->
+    <div class="page" id="page2">
       <label for="user_email">Email Address</label>
       <input id="user_email" type="email" name="user_email" placeholder="you@example.com" required>
-    </div>
-    <div>
       <label for="audience_level">Priority</label>
       <select id="audience_level" name="audience_level" required>
         <option value="">— Priority —</option>
@@ -179,84 +129,103 @@ textarea{min-height:120px; resize:vertical;}
         <option>Medium (2–3 Days)</option>
         <option>High (Urgent)</option>
       </select>
-    </div>
-    <div>
       <label for="preferred_datetime">Preferred Date & Time</label>
       <input id="preferred_datetime" type="datetime-local" name="preferred_datetime">
-    </div>
-    <div>
       <label for="message">Describe the Problem</label>
       <textarea id="message" name="message" placeholder="Describe your issue..."></textarea>
+      <div class="actions">
+        <button type="button" class="btn btn-ghost" id="backTo1">⬅ Back</button>
+        <button type="submit" class="btn btn-primary">Send Request</button>
+        <a class="whatsapp" id="whatsLater" href="#" target="_blank">💬 Quick WhatsApp</a>
+      </div>
     </div>
 
-    <div class="actions">
-      <button type="submit" class="btn btn-primary">Send Request</button>
-      <a class="whatsapp" id="quickWhatsApp" href="#" target="_blank">💬 Quick WhatsApp</a>
+    <!-- Step 3: Status -->
+    <div class="page" id="page3">
+      <div id="statusMsg"></div>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="backToStart">Back to Start</button>
+      </div>
     </div>
 
-    <div id="statusMsg"></div>
   </form>
-
-  <div class="info">
-    <p><strong>Contact:</strong> Timothy Tieku — <a href="tel:+233543899210" style="color:#fff;">+233 54 389 9210</a></p>
-    <p><strong>Service Area:</strong> Accra & surrounding areas</p>
-  </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-emailjs.init("g5ulqlDwp0QDcjdat"); // <-- Replace
+emailjs.init("ad1dHGUf_gonZ5ERG"); // <-- replace
 
-const form = document.getElementById('maintForm');
-const statusMsg = document.getElementById('statusMsg');
-const quickWA = document.getElementById('quickWhatsApp');
+// Step controls
+const page1=document.getElementById('page1');
+const page2=document.getElementById('page2');
+const page3=document.getElementById('page3');
+const progBar=document.getElementById('progBar');
 
-function updateWhatsApp(){
-  const name = document.getElementById('user_name').value.trim() || "[name]";
-  const phone = document.getElementById('user_phone').value.trim() || "[phone]";
-  const type = document.getElementById('maintenance_type').value || "electrical assistance";
-  quickWA.href = "https://api.whatsapp.com/send?phone=233543899210&text=" + encodeURIComponent(
+document.getElementById('toStep2').addEventListener('click',()=>{
+  const name=document.getElementById('user_name').value.trim();
+  const phone=document.getElementById('user_phone').value.trim();
+  const type=document.getElementById('maintenance_type').value;
+  if(!name||!phone||!type){alert("Fill all fields to continue."); return;}
+  page1.classList.remove('active'); page2.classList.add('active');
+  progBar.style.width='50%';
+});
+
+document.getElementById('backTo1').addEventListener('click',()=>{
+  page2.classList.remove('active'); page1.classList.add('active');
+  progBar.style.width='0%';
+});
+
+document.getElementById('backToStart').addEventListener('click',()=>{
+  page3.classList.remove('active'); page1.classList.add('active');
+  progBar.style.width='0%';
+});
+
+// WhatsApp Links
+function updateWhatsNow(){
+  const name=document.getElementById('user_name').value.trim()||"[name]";
+  const phone=document.getElementById('user_phone').value.trim()||"[phone]";
+  const type=document.getElementById('maintenance_type').value||"electrical assistance";
+  document.getElementById('whatsNow').href="https://api.whatsapp.com/send?phone=233543899210&text="+encodeURIComponent(
     Hello Engineer Timothy Tieku, my name is ${name} and I need ${type}. Phone: ${phone}.
   );
 }
+function updateWhatsLater(){
+  const name=document.getElementById('user_name').value.trim()||"[name]";
+  const phone=document.getElementById('user_phone').value.trim()||"[phone]";
+  const email=document.getElementById('user_email').value.trim()||"[email]";
+  const priority=document.getElementById('audience_level').value||"[priority]";
+  document.getElementById('whatsLater').href="https://api.whatsapp.com/send?phone=233543899210&text="+encodeURIComponent(
+    Hello Engineer Timothy Tieku, my name is ${name}. Phone: ${phone}. Email: ${email}. Priority: ${priority}.
+  );
+}
+['input','change'].forEach(e=>{document.getElementById('maintForm').addEventListener(e,()=>{
+  updateWhatsNow(); updateWhatsLater();
+});});
+updateWhatsNow(); updateWhatsLater();
 
-['input','change'].forEach(evt=>{
-  form.addEventListener(evt, updateWhatsApp);
-});
-updateWhatsApp();
-
-form.addEventListener('submit', function(e){
+// Submit via EmailJS
+document.getElementById('maintForm').addEventListener('submit',function(e){
   e.preventDefault();
-  const name = document.getElementById('user_name').value.trim();
-  const phone = document.getElementById('user_phone').value.trim();
-  const type = document.getElementById('maintenance_type').value;
-  const email = document.getElementById('user_email').value.trim();
-  const priority = document.getElementById('audience_level').value;
-  const datetime = document.getElementById('preferred_datetime').value || "Not specified";
-  const message = document.getElementById('message').value.trim() || "No description provided";
+  const name=document.getElementById('user_name').value.trim();
+  const phone=document.getElementById('user_phone').value.trim();
+  const type=document.getElementById('maintenance_type').value;
+  const email=document.getElementById('user_email').value.trim();
+  const priority=document.getElementById('audience_level').value;
+  const datetime=document.getElementById('preferred_datetime').value || "Not specified";
+  const message=document.getElementById('message').value.trim() || "No description provided";
+  if(!name||!phone||!type||!email||!priority){alert("Fill all required fields."); return;}
 
-  if(!name || !phone || !type || !email || !priority){
-    alert("Please fill all required fields.");
-    return;
-  }
+  page2.classList.remove('active'); page3.classList.add('active');
+  progBar.style.width='100%';
+  const statusMsg=document.getElementById('statusMsg');
+  statusMsg.style.color=var('--accent-1');
+  statusMsg.textContent="Sending request...";
 
-  statusMsg.style.color = "#ffd700";
-  statusMsg.textContent = "Sending request...";
+  const templateParams={user_name:name,user_phone:phone,maintenance_type:type,user_email:email,audience_level:priority,preferred_datetime:datetime,message:message};
 
-  const templateParams = {user_name:name,user_phone:phone,maintenance_type:type,user_email:email,audience_level:priority,preferred_datetime:datetime,message:message};
-
-  emailjs.send("service_972cf37","template_vd62hbr",templateParams) // <-- Replace
-    .then(() => {
-      statusMsg.style.color = "#00ff90";
-      statusMsg.textContent = "✅ Request sent successfully!";
-      form.reset();
-      updateWhatsApp();
-    })
-    .catch((err) => {
-      console.error(err);
-      statusMsg.style.color = "#ff3d00";
-      statusMsg.textContent = "❌ Failed to send request. Check EmailJS setup.";
-    });
+  emailjs.send("service_972cf37","template_3epza38",templateParams)
+    .then(()=>{statusMsg.style.color="#00ff90"; statusMsg.textContent="✅ Request sent successfully!"; form.reset(); updateWhatsNow(); updateWhatsLater();})
+    .catch((err)=>{console.error(err); statusMsg.style.color="#ff3d00"; statusMsg.textContent="❌ Failed to send request. Check EmailJS setup."});
 });
 </script>
 </body>
