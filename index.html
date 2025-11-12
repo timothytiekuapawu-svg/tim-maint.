@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Joseph Turkson Electrical — Maintenance Booking</title>
+  <title>Timothy Tieku — Maintenance Booking</title>
 
   <!-- favicon (optional) -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -20,7 +20,6 @@
       --muted: rgba(255,255,255,0.85);
       --max-width: 980px;
     }
-    /* Reset & base */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -37,7 +36,6 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
-    /* Slideshow background */
     .slideshow {
       position:fixed;
       inset:0;
@@ -60,7 +58,6 @@
       transform:scale(1);
     }
 
-    /* dark overlay to improve contrast */
     .bg-overlay {
       position:fixed;
       inset:0;
@@ -68,7 +65,6 @@
       z-index:-2;
     }
 
-    /* Main container (frosted glass) */
     .wrap{
       width:100%;
       max-width:var(--max-width);
@@ -116,7 +112,6 @@
     }
     .contact a{color:var(--muted); text-decoration:none; font-weight:600}
 
-    /* Grid layout for card */
     .card {
       display:grid;
       grid-template-columns: 1fr 380px;
@@ -128,7 +123,6 @@
       .wrap{padding:20px}
     }
 
-    /* Left column: form area */
     .form-shell{
       padding:6px 0 0 0;
     }
@@ -212,7 +206,6 @@
       font-weight:700;
     }
 
-    /* Right column: info / guarantee */
     .info {
       background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12));
       border-radius:12px;
@@ -252,9 +245,7 @@
 </head>
 <body>
 
-  <!-- background slideshow (10 images) -->
   <div class="slideshow" aria-hidden="true">
-    <!-- Use your generated images: put real files in /images/ named electrician1.jpg ... electrician10.jpg -->
     <img src="images/electrician1.jpg" class="active" alt="">
     <img src="images/electrician2.jpg" alt="">
     <img src="images/electrician3.jpg" alt="">
@@ -272,9 +263,9 @@
   <main class="wrap" role="main" aria-labelledby="pageTitle">
     <header class="top">
       <div class="brand" aria-hidden="false">
-        <div class="logo">JT</div>
+        <div class="logo">TT</div>
         <div>
-          <h1 id="pageTitle">Joseph Turkson Electrical</h1>
+          <h1 id="pageTitle">Timothy Tieku</h1>
           <div class="subtitle">Fast • Trusted • Professional electrical maintenance</div>
         </div>
       </div>
@@ -285,12 +276,10 @@
     </header>
 
     <section class="card" aria-label="Booking card">
-      <!-- left: form -->
       <div class="form-shell" aria-hidden="false">
         <div class="progress" aria-hidden="false"><span id="progBar" style="width:50%"></span></div>
 
         <form id="maintForm" novalidate>
-          <!-- Page 1 -->
           <div class="page" id="page1" data-step="1" aria-hidden="false">
             <div class="row">
               <div class="col">
@@ -323,12 +312,11 @@
 
             <div class="actions">
               <button type="button" class="btn btn-primary" id="toStep2">Next ➡</button>
-              <a class="whatsapp" id="whatsNow" href="https://api.whatsapp.com/send?phone=233543899210&text=Hello%20Engineer%20Joseph%2C%20I%20need%20electrical%20assistance." target="_blank" rel="noopener">💬 Quick WhatsApp</a>
+              <a class="whatsapp" id="whatsNow" target="_blank">💬 Quick WhatsApp</a>
               <div style="margin-left:auto" class="muted-note">Step 1 of 2</div>
             </div>
           </div>
 
-          <!-- Page 2 -->
           <div class="page" id="page2" data-step="2" style="display:none" aria-hidden="true">
             <div class="row">
               <div class="col">
@@ -363,7 +351,7 @@
             <div class="actions">
               <button type="button" class="btn btn-ghost" id="backTo1">⬅ Back</button>
               <button type="submit" class="btn btn-primary">Send Request</button>
-              <a class="whatsapp" id="whatsLater" href="https://api.whatsapp.com/send?phone=233543899210&text=Hello%20Engineer%20Timothy%2C%20I%20have%20completed%20the%20booking%20form." target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+              <a class="whatsapp" id="whatsLater" target="_blank">💬 Chat on WhatsApp</a>
               <div style="margin-left:auto;color:var(--muted);font-weight:600">Step 2 of 2</div>
             </div>
 
@@ -372,19 +360,16 @@
         </form>
       </div>
 
-      <!-- right: info panel -->
       <aside class="info" aria-hidden="false">
         <h3>How it works</h3>
         <div class="bullet">
           <div style="width:12px;height:12px;border-radius:3px;background:var(--accent-1)"></div>
           <div><strong>Quick booking:</strong> Fill the short form — we receive your details instantly.</div>
         </div>
-
         <div class="bullet">
           <div style="width:12px;height:12px;border-radius:3px;background:var(--accent-1)"></div>
           <div><strong>Transparent communication:</strong> We'll confirm availability & give an estimate before we start work.</div>
         </div>
-
         <div class="bullet">
           <div style="width:12px;height:12px;border-radius:3px;background:var(--accent-1)"></div>
           <div><strong>Experienced team:</strong> Wiring, rewiring, socket installation, fuse/circuit troubleshooting, solar & inverters.</div>
@@ -392,37 +377,36 @@
 
         <div class="trust">
           <div><strong>Contact</strong></div>
-          <div>Joseph Turkson — <a href="tel:+233543899210">+233 54 389 9210</a></div>
-          <div style="margin-top:8px"><strong>Service area:</strong> Accra & surrounding areas (update in settings)</div>
+          <div>Timothy Tieku — <a href="tel:+233543899210">+233 54 389 9210</a></div>
+          <div style="margin-top:8px"><strong>Service area:</strong> Accra & surrounding areas</div>
         </div>
       </aside>
     </section>
 
     <footer class="site-foot" aria-hidden="false">
-      <div>© <strong>Joseph Turkson Electrical</strong> — Trusted electrical maintenance</div>
+      <div>© <strong>Timothy Tieku</strong> — Trusted electrical maintenance</div>
       <div>Need help? <a href="mailto:support@yourdomain.com" style="color:var(--muted);text-decoration:underline;">support@yourdomain.com</a></div>
     </footer>
   </main>
 
-  <!-- EmailJS (replace your keys) -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    /* ---------- Slideshow logic ---------- */
+    /* ---------- Slideshow ---------- */
     (function(){
       const slides = document.querySelectorAll('.slideshow img');
-      let idx = 0;
+      let idx=0;
       function show(i){
-        slides.forEach((s)=>s.classList.remove('active'));
+        slides.forEach(s=>s.classList.remove('active'));
         slides[i].classList.add('active');
       }
-      // if you only have 1 image, the code still cycles
       setInterval(()=>{
-        idx = (idx + 1) % slides.length;
+        idx = (idx+1) % slides.length;
         show(idx);
-      }, 6000);
+      },6000);
+      show(idx);
     })();
 
-    /* ---------- Form step logic ---------- */
+    /* ---------- Form steps ---------- */
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
     const toStep2 = document.getElementById('toStep2');
@@ -447,7 +431,6 @@
     }
 
     toStep2.addEventListener('click', ()=>{
-      // simple front-end validation for step 1
       const name = document.getElementById('user_name').value.trim();
       const phone = document.getElementById('user_phone').value.trim();
       const type = document.getElementById('maintenance_type').value;
@@ -460,110 +443,9 @@
 
     backTo1.addEventListener('click', ()=>goToStep(1));
 
-    /* ---------- EmailJS submit ---------- */
-    (function(){
-      // init
-      try{
-        emailjs.init("g5ulqlDwp0QDcjdat"); // <--- replace
-      }catch(e){
-        // emailjs absent or blocked - graceful
-        console.warn('EmailJS init failed or blocked.', e);
-      }
+    /* ---------- WhatsApp links ---------- */
+    const whatsNow = document.getElementById('whatsNow');
+    const whatsLater = document.getElementById('whatsLater');
 
-      const form = document.getElementById('maintForm');
-      const statusMsg = document.getElementById('statusMsg');
-
-      form.addEventListener('submit', function(ev){
-        ev.preventDefault();
-
-        // basic validation step 2
-        const email = document.getElementById('user_email').value.trim();
-        const priority = document.getElementById('audience_level').value;
-        if(!email || !priority){
-          alert('Please provide your email and select priority before sending.');
-          return;
-        }
-
-        // prepare params
-        const templateParams = {
-          user_name: document.getElementById('user_name').value.trim(),
-          user_phone: document.getElementById('user_phone').value.trim(),
-          maintenance_type: document.getElementById('maintenance_type').value,
-          user_email: email,
-          audience_level: priority,
-          preferred_datetime: document.getElementById('preferred_datetime').value || 'Not specified',
-          message: document.getElementById('message').value.trim() || 'No description provided'
-        };
-
-        // show sending
-        statusMsg.style.color = 'var(--accent-1)';
-        statusMsg.textContent = 'Sending request...';
-
-        // send via EmailJS
-        const serviceID = 'service_972cf37'; // replace
-        const templateID = 'template_vd62hbr'; // replace
-
-        // If EmailJS is not loaded/initialized, skip and simulate success
-        if(typeof emailjs === 'undefined' || !emailjs.send){
-          console.warn('EmailJS not available — form not sent. Simulating success for demo.');
-          statusMsg.style.color = '#00ff90';
-          statusMsg.textContent = '✅ Request recorded (demo). Please configure EmailJS keys to enable real emails.';
-          form.reset();
-          goToStep(1);
-          return;
-        }
-
-        emailjs.send(serviceID, templateID, templateParams)
-          .then(() => {
-            statusMsg.style.color = '#00ff90';
-            statusMsg.textContent = '✅ Request sent successfully! We will contact you shortly.';
-            form.reset();
-            goToStep(1);
-          })
-          .catch((err) => {
-            console.error('EmailJS error:', err);
-            statusMsg.style.color = '#ff7b7b';
-            statusMsg.textContent = '❌ Failed to send — check console and your EmailJS setup.';
-          });
-
-      });
-    })();
-
-    /* ---------- Prefill WhatsApp messages with collected values ---------- */
-    (function(){
-      const whatsNow = document.getElementById('whatsNow');
-      const whatsLater = document.getElementById('whatsLater');
-
-      function encodeMsg(o){
-        return encodeURIComponent(Hello Engineer Joseph, my name is ${o.name||'[name]'} and I need ${o.type||'electrical assistance'}. Phone: ${o.phone||'[phone]'}.);
-      }
-
-      const nameInput = document.getElementById('user_name');
-      const phoneInput = document.getElementById('user_phone');
-      const typeInput = document.getElementById('maintenance_type');
-
-      function updateNowLink(){
-        whatsNow.href = 'https://api.whatsapp.com/send?phone=233543899210&text=' + encodeMsg({
-          name: nameInput.value.trim(),
-          phone: phoneInput.value.trim(),
-          type: typeInput.value
-        });
-      }
-      function updateLaterLink(){
-        const emailVal = document.getElementById('user_email') ? document.getElementById('user_email').value.trim() : '';
-        const priorityVal = document.getElementById('audience_level') ? document.getElementById('audience_level').value : '';
-        whatsLater.href = 'https://api.whatsapp.com/send?phone=233543899210&text=' + encodeURIComponent(
-          Hello Engineer Joseph, I have sent a booking request. Name: ${nameInput.value.trim() || '[name]'}, Phone: ${phoneInput.value.trim() || '[phone]'}, Email: ${emailVal || '[email]'}, Priority: ${priorityVal || '[priority]'}
-        );
-      }
-
-      [nameInput,phoneInput,typeInput].forEach(el=>el.addEventListener('input', updateNowLink));
-      document.addEventListener('input', updateLaterLink);
-
-      // init
-      updateNowLink();
-      updateLaterLink();
-    })();
-  </script>
-</body>
-</html>
+    function encodeMsg(o){
+      return encodeURIComponent(`Hello Engineer, my name is ${o.name||'[name]'} and
