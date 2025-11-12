@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electrical Maintenance Booking</title>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      // ✅ Initialize EmailJS with your Public Key
+      emailjs.init("q-d0Pr6p18rFqAMAj");
+    })();
+  </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+        url('https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=1600&q=80')
+        no-repeat center center/cover;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      background: rgba(0,0,0,0.8);
+      padding: 20px;
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #00aaff;
+      letter-spacing: 1px;
+    }
+
+    main {
+      max-width: 700px;
+      background: rgba(255,255,255,0.1);
+      margin: 40px auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
+      background: rgba(255,255,255,0.9);
+      color: #000;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #0088cc;
+    }
+
+    .whatsapp {
+      background-color: #25D366;
+    }
+
+    .whatsapp:hover {
+      background-color: #1ebe5d;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.8);
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>⚡ Electrical Maintenance & Installation Services ⚡</header>
+
+  <main>
+    <h2>Book Your Electrical Maintenance</h2>
+
+    <form id="bookingForm">
+      <label>Full Name</label>
+      <input type="text" id="name" required />
+
+      <label>Email</label>
+      <input type="email" id="email" required />
+
+      <label>Phone Number</label>
+      <input type="tel" id="phone" required />
+
+      <label>Address</label>
+      <input type="text" id="address" required />
+
+      <label>Maintenance Type</label>
+      <select id="service" required>
+        <option value="">--Select Service--</option>
+        <option>Wiring faults or repair</option>
+        <option>Rewiring or new connection</option>
+        <option>Lighting or fan installation</option>
+        <option>Socket outlet installation</option>
+        <option>Fuse box or circuit breakers</option>
+        <option>Generator or inverters</option>
+        <option>Appliance connection</option>
+        <option>Reading blueprints & diagrams</option>
+        <option>Troubleshooting electrical problems</option>
+        <option>Routine maintenance & inspection</option>
+        <option>Installing electrical fixtures</option>
+      </select>
+
+      <label>Preferred Date</label>
+      <input type="date" id="date" required />
+
+      <label>Preferred Time</label>
+      <input type="time" id="time" required />
+
+      <label>Priority Level</label>
+      <select id="priority" required>
+        <option>Normal</option>
+        <option>Urgent</option>
+        <option>Emergency</option>
+      </select>
+
+      <label>Describe the Problem</label>
+      <textarea id="details" rows="4" placeholder="Describe your issue..." required></textarea>
+
+      <button type="button" onclick="previewRequest()">Preview Request</button>
+      <button type="submit">Send Request</button>
+      <button type="button" class="whatsapp" onclick="openWhatsApp()">Chat on WhatsApp</button>
+    </form>
+
+    <div id="preview" style="display:none; margin-top:20px; background:rgba(255,255,255,0.2); padding:15px; border-radius:8px;"></div>
+  </main>
+
+  <section class="gallery">
+    <h2 style="text-align:center;">⚡ Maintenance Gallery ⚡</h2>
+    <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=1000&q=80" alt="Electrical Work">
+    <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=1000&q=80" alt="Electrical Installation">
+    <img src="https://images.unsplash.com/photo-1581091012184-5c6d89f1cfb6?auto=format&fit=crop&w=1000&q=80" alt="Lighting Work">
+  </section>
+
+  <footer>
+    <p><strong>About Us:</strong> We are certified electrical engineers providing wiring, repairs, and installations for homes and businesses.</p>
+    <p><strong>Contact Us:</strong> 📞 +233 543 89 9210</p>
+  </footer>
+
+  <script>
+    // 🔍 Preview the booking before sending
+    function previewRequest() {
+      const name = document.getElementById("name").value;
+      const service = document.getElementById("service").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const details = document.getElementById("details").value;
+
+      const previewBox = document.getElementById("preview");
+      previewBox.style.display = "block";
+      previewBox.innerHTML = `
+        <h3>🔍 Preview Request</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Service:</strong> ${service}</p>
+        <p><strong>Date & Time:</strong> ${date} at ${time}</p>
+        <p><strong>Details:</strong> ${details}</p>
+      `;
+    }
+
+    // 📧 Send form through EmailJS
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.send("service_gjmaqfe", "template_7d2q024", {
+        from_name: document.getElementById("name").value,
+        from_email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value,
+        service: document.getElementById("service").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        priority: document.getElementById("priority").value,
+        details: document.getElementById("details").value
+      })
+      .then(() => {
+        alert("✅ Maintenance request sent successfully! Check your inbox for details.");
+        document.getElementById("bookingForm").reset();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("❌ Failed to send request. Please try again later.");
+      });
+    });
+
+    // 💬 WhatsApp Chat
+    function openWhatsApp() {
+      const phone = "+233543899210";
+      const msg = encodeURIComponent("Hello! I want to request an electrical maintenance service.");
+      window.open(https://wa.me/${phone}?text=${msg}, "_blank");
+    }
+  </script>
+</body>
+</html>
