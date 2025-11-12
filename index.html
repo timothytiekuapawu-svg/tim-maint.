@@ -23,7 +23,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background: url('images/electrician1.jpg') center/cover no-repeat;
+  background: url('https://i.ibb.co/2Y0F0fS/electrician1.jpg') center/cover no-repeat;
   overflow-x:hidden;
 }
 
@@ -153,13 +153,14 @@ textarea{min-height:120px; resize:vertical;}
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-emailjs.init("ad1dHGUf_gonZ5ERG"); // <-- replace
+emailjs.init("ad1dHGUf_gonZ5ERG"); // <-- replace with your public key
 
 // Step controls
 const page1=document.getElementById('page1');
 const page2=document.getElementById('page2');
 const page3=document.getElementById('page3');
 const progBar=document.getElementById('progBar');
+const form=document.getElementById('maintForm');
 
 document.getElementById('toStep2').addEventListener('click',()=>{
   const name=document.getElementById('user_name').value.trim();
@@ -198,13 +199,13 @@ function updateWhatsLater(){
     Hello Engineer Timothy Tieku, my name is ${name}. Phone: ${phone}. Email: ${email}. Priority: ${priority}.
   );
 }
-['input','change'].forEach(e=>{document.getElementById('maintForm').addEventListener(e,()=>{
+['input','change'].forEach(e=>{form.addEventListener(e,()=>{
   updateWhatsNow(); updateWhatsLater();
 });});
 updateWhatsNow(); updateWhatsLater();
 
 // Submit via EmailJS
-document.getElementById('maintForm').addEventListener('submit',function(e){
+form.addEventListener('submit',function(e){
   e.preventDefault();
   const name=document.getElementById('user_name').value.trim();
   const phone=document.getElementById('user_phone').value.trim();
@@ -218,14 +219,21 @@ document.getElementById('maintForm').addEventListener('submit',function(e){
   page2.classList.remove('active'); page3.classList.add('active');
   progBar.style.width='100%';
   const statusMsg=document.getElementById('statusMsg');
-  statusMsg.style.color=var('--accent-1');
-  statusMsg.textContent="Sending request...";
 
   const templateParams={user_name:name,user_phone:phone,maintenance_type:type,user_email:email,audience_level:priority,preferred_datetime:datetime,message:message};
 
   emailjs.send("service_972cf37","template_3epza38",templateParams)
-    .then(()=>{statusMsg.style.color="#00ff90"; statusMsg.textContent="✅ Request sent successfully!"; form.reset(); updateWhatsNow(); updateWhatsLater();})
-    .catch((err)=>{console.error(err); statusMsg.style.color="#ff3d00"; statusMsg.textContent="❌ Failed to send request. Check EmailJS setup."});
+    .then(()=>{
+      statusMsg.style.color="#00ff90"; 
+      statusMsg.textContent="✅ Request sent successfully!";
+      form.reset();
+      updateWhatsNow(); updateWhatsLater();
+    })
+    .catch((err)=>{
+      console.error(err); 
+      statusMsg.style.color="#ff3d00"; 
+      statusMsg.textContent="❌ Failed to send request. Check EmailJS setup.";
+    });
 });
 </script>
 </body>
