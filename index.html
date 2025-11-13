@@ -377,19 +377,26 @@
     }
 
     // small helpers
-    function escape(s){ if(!s) return ''; return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') }
+function escape(s) {
+  if (!s) return '';
+  return String(s)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
 
-    // dynamic quick whatsapp message update
-    ['user_name','user_phone','maintenance_type'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(!el) return;
-      el.addEventListener('input', ()=>{
-        const name=document.getElementById('user_name').value.trim()||'[name]';
-        const phone=document.getElementById('user_phone').value.trim()||'[phone]';
-        const type=document.getElementById('maintenance_type').value||'electrical assistance';
-        document.getElementById('quickwhats').href = 'https://api.whatsapp.com/send?phone=233543899210&text=' + encodeURIComponent(Hello SmartFix, my name is ${name} (${phone}). I need ${type}.);
-      });
-    });
-  </script>
-</body>
-</html>
+// dynamic quick whatsapp message update
+['user_name', 'user_phone', 'maintenance_type'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', () => {
+    const name = document.getElementById('user_name').value.trim() || '[name]';
+    const phone = document.getElementById('user_phone').value.trim() || '[phone]';
+    const type = document.getElementById('maintenance_type').value || 'electrical assistance';
+    const quick = document.getElementById('quickwhats');
+    if (!quick) return;
+    quick.href =
+      'https://api.whatsapp.com/send?phone=233543899210&text=' +
+      encodeURIComponent(`Hello SmartFix, my name is ${name} (${phone}). I need ${type}.`);
+  });
+});
