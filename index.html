@@ -1,283 +1,395 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>Electrical Maintenance Booking</title>    <!-- Favicon / Website Icon -->    <link rel="icon" href="favicon.ico" type="image/x-icon">  
-  <link rel="icon" href="favicon.png" type="image/png">  
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">  
-  <link rel="icon" sizes="192x192" href="android-chrome-192x192.png">    <style>  
-    body {  
-      margin: 0;  
-      font-family: "Poppins", sans-serif;  
-      color: #fff;  
-      background: url('A_photograph_of_a_Caucasian_electrician_with_a_lig.png') no-repeat center center/cover;  
-      height: 100vh;  
-      display: flex;  
-      flex-direction: column;  
-      justify-content: center;  
-      align-items: center;  
-      overflow-x: hidden;  
-      position: relative;  
-    }  
-  
-    .overlay {  
-      position: fixed;  
-      top: 0; left: 0;  
-      width: 100%; height: 100%;  
-      background: rgba(0, 0, 0, 0.4);  
-      z-index: -1;  
-    }  
-  
-    .container {  
-      max-width: 700px;  
-      width: 90%;  
-      background: rgba(255, 255, 255, 0.1);  
-      backdrop-filter: blur(10px);  
-      padding: 40px;  
-      border-radius: 15px;  
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);  
-    }  
-  
-    h1 {  
-      text-align: center;  
-      color: #ffd700;  
-      margin-bottom: 10px;  
-    }  
-  
-    p.note {  
-      text-align: center;  
-      margin-bottom: 30px;  
-      color: #ddd;  
-    }  
-  
-    form {  
-      display: flex;  
-      flex-direction: column;  
-      gap: 20px;  
-    }  
-  
-    .form-group {  
-      display: flex;  
-      flex-direction: column;  
-    }  
-  
-    label {  
-      font-weight: bold;  
-      margin-bottom: 5px;  
-    }  
-  
-    input, select, textarea {  
-      padding: 10px;  
-      border: none;  
-      border-radius: 8px;  
-      font-size: 1rem;  
-      background: rgba(255, 255, 255, 0.9);  
-      color: #000;  
-    }  
-  
-    textarea {  
-      width: 100%;  
-      resize: vertical;  
-      margin-top: 10px;  
-    }  
-  
-    .buttons {  
-      text-align: center;  
-      margin-top: 25px;  
-    }  
-  
-    button {  
-      background: linear-gradient(135deg, #ffcc00, #ff8800);  
-      border: none;  
-      border-radius: 8px;  
-      padding: 12px 25px;  
-      color: #000;  
-      font-weight: bold;  
-      cursor: pointer;  
-      transition: 0.3s;  
-      margin: 5px;  
-    }  
-  
-    button:hover {  
-      transform: scale(1.05);  
-      background: linear-gradient(135deg, #ffd633, #ffa31a);  
-    }  
-  
-    .whatsapp-btn {  
-      display: inline-block;  
-      background-color: #25D366;  
-      color: #fff;  
-      text-decoration: none;  
-      padding: 12px 25px;  
-      border-radius: 8px;  
-      font-weight: bold;  
-      margin: 5px;  
-    }  
-  
-    .whatsapp-btn:hover {  
-      background-color: #20b358;  
-    }  
-  
-    #statusMsg {  
-      text-align: center;  
-      margin-top: 10px;  
-      font-size: 1rem;  
-    }  
-  
-    footer {  
-      text-align: center;  
-      margin-top: 40px;  
-      color: #ccc;  
-      font-size: 0.9rem;  
-    }  
-  
-    .form-page {  
-      display: none;  
-    }  
-  
-    .form-page.active {  
-      display: block;  
-    }  
-  
-    @media (max-width: 768px) {  
-      .container {  
-        padding: 25px;  
-      }  
-    }  
-  </style>  </head>  
-<body>  
-  <div class="overlay"></div>    <div class="container">  
-    <h1>⚡ Electrical Maintenance Booking Form</h1>  
-    <p class="note">Fill this form to request maintenance. You can preview and chat with us directly on WhatsApp.</p>  <form id="maintForm">  
-  <!-- Step 1 -->  
-  <div class="form-page active" id="page1">  
-    <div class="form-group">  
-      <label for="user_name">Full Name</label>  
-      <input type="text" id="user_name" name="user_name" required>  
-    </div>  
+<!-- Save this as index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SmartFix electricals — Booking (Single-file)</title>
+  <style>
+    :root{ --accent1:#ffd700; --accent2:#ff8800; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Poppins",sans-serif;color:#fff;min-height:100vh;position:relative;overflow:auto;background:#000;}
+    /* Slideshow using 2 images (duplicated for a smooth loop) */
+    .slideshow{position:fixed;inset:0;z-index:-3;background-size:cover;background-position:center;animation:slideshow 20s linear infinite}
+    @keyframes slideshow {
+      0% {background-image:url('images/electrician1.jpg')}
+      25% {background-image:url('images/electrician2.jpg')}
+      50% {background-image:url('images/electrician1.jpg')}
+      75% {background-image:url('images/electrician2.jpg')}
+      100% {background-image:url('images/electrician1.jpg')}
+    }
+    .overlay{position:fixed;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.55));z-index:-2}
 
-    <div class="form-group">  
-      <label for="user_phone">Phone Number</label>  
-      <input type="tel" id="user_phone" name="user_phone" required>  
-    </div>  
+    .page-wrap{max-width:1100px;margin:28px auto;padding:18px}
+    .card{background:rgba(255,255,255,0.10);border-radius:14px;padding:24px;backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#000;font-weight:800}
+    h1{margin:0;color:var(--accent1);font-size:1.05rem}
+    .subtitle{color:rgba(255,255,255,0.9)}
+    .contact{ text-align:right; font-size:0.95rem; color:rgba(255,255,255,0.9) }
 
-    <div class="form-group">  
-      <label for="maintenance_type">Type of Maintenance</label>  
-      <select id="maintenance_type" name="maintenance_type" required>  
-        <option value="">-- Select --</option>  
-        <option>Wiring fault / repair</option>  
-        <option>Rewiring / new connection</option>  
-        <option>Lighting / fan installation</option>  
-        <option>Socket outlet installation</option>  
-        <option>Fuse box / circuit breaker</option>  
-        <option>Generator / inverter</option>  
-        <option>Appliance connection</option>  
-        <option>Solar PV / battery system</option>  
-        <option>Other</option>  
-      </select>  
-    </div>  
+    .progress{height:10px;background:rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;margin:10px 0}
+    .progress > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:50%;transition:width 260ms}
 
-    <div class="buttons">  
-      <button type="button" id="nextBtn">Next ➡</button>  
-    </div>  
-  </div>  
+    /* Form layout */
+    form{display:flex;flex-direction:column;gap:14px}
+    .row{display:flex;gap:12px}
+    .col{flex:1;display:flex;flex-direction:column;gap:8px}
+    label{font-weight:700;color:rgba(255,255,255,0.95)}
+    input,select,textarea{padding:10px;border-radius:8px;border:none;font-size:1rem;background:rgba(255,255,255,0.95);color:#111}
+    textarea{min-height:120px;resize:vertical}
 
-  <!-- Step 2 -->  
-  <div class="form-page" id="page2">  
-    <div class="form-group">  
-      <label for="user_email">Email</label>  
-      <input type="email" id="user_email" name="user_email" required>  
-    </div>  
+    .buttons{display:flex;gap:10px;align-items:center}
+    .btn{padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;border:none}
+    .btn-primary{background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#000}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.12);color:#fff}
+    .whatsapp{background:#25D366;color:#fff;padding:10px 12px;border-radius:8px;text-decoration:none;font-weight:700}
 
-    <div class="form-group">  
-      <label for="audience_level">Priority Level</label>  
-      <select id="audience_level" name="audience_level" required>  
-        <option value="">-- Select Priority --</option>  
-        <option>Low (Flexible)</option>  
-        <option>Medium (2–3 Days)</option>  
-        <option>High (Urgent)</option>  
-      </select>  
-    </div>  
+    /* Sections shown/hidden */
+    section.step{display:none}
+    section.step.active{display:block}
 
-    <div class="form-group">  
-      <label for="preferred_datetime">Preferred Date & Time</label>  
-      <input type="datetime-local" id="preferred_datetime" name="preferred_datetime">  
-    </div>  
+    /* Preview box */
+    .review{background:rgba(255,255,255,0.04);padding:12px;border-radius:10px}
 
-    <div class="form-group">  
-      <label for="message">Describe the Problem</label>  
-      <textarea id="message" name="message" rows="4" placeholder="Describe your issue in detail..."></textarea>  
-    </div>  
+    /* Spinner */
+    .spinner{width:48px;height:48px;border-radius:50%;border:5px solid rgba(255,255,255,0.12);border-top-color:var(--accent1);animation:spin 900ms linear infinite;margin:12px auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    <div class="buttons">  
-      <button type="button" id="prevBtn">⬅ Back</button>  
-      <button type="submit">Send Request</button>  
-      <a href="https://api.whatsapp.com/send?phone=233543899210&text=Hello%20Engineer%20Joseph%2C%20I%20want%20to%20book%20an%20electrical%20maintenance%20service."  
-         target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a>  
-    </div>  
-    <p id="statusMsg"></p>  
-  </div>  
-</form>
+    /* About & Contact */
+    .info{margin-top:22px;background:rgba(0,0,0,0.24);padding:16px;border-radius:12px}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:900px){.row{flex-direction:column}.info-grid{grid-template-columns:1fr}}
 
-  </div>    <footer>  
-    <p><strong>About Us:</strong> We specialize in wiring, rewiring, installation, troubleshooting, maintenance, and blueprint reading for electrical systems. Contact us: 0543 89 92 10</p>  
-  </footer>    <!-- EmailJS -->    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>    <script>  
-    emailjs.init("ad1dHGUf_gonZ5ERG"); // Replace with your public key  
-  
-    const page1 = document.getElementById("page1");  
-    const page2 = document.getElementById("page2");  
-    const nextBtn = document.getElementById("nextBtn");  
-    const prevBtn = document.getElementById("prevBtn");  
-  
-    nextBtn.addEventListener("click", () => {  
-      if (document.getElementById("user_name").value &&   
-          document.getElementById("user_phone").value &&   
-          document.getElementById("maintenance_type").value) {  
-        page1.classList.remove("active");  
-        page2.classList.add("active");  
-      } else {  
-        alert("Please fill all fields in Step 1.");  
-      }  
-    });  
-  
-    prevBtn.addEventListener("click", () => {  
-      page2.classList.remove("active");  
-      page1.classList.add("active");  
-    });  
-  
-    document.getElementById("maintForm").addEventListener("submit", function(event) {  
-      event.preventDefault();  
-  
-      const serviceID = "service_972cf37";  // Replace  
-      const templateID = "template_3epza38"; // Replace  
-  
-      const templateParams = {  
-        user_name: document.getElementById("user_name").value,  
-        user_email: document.getElementById("user_email").value,  
-        user_phone: document.getElementById("user_phone").value,  
-        maintenance_type: document.getElementById("maintenance_type").value,  
-        audience_level: document.getElementById("audience_level").value,  
-        preferred_datetime: document.getElementById("preferred_datetime").value,  
-        message: document.getElementById("message").value  
-      };  
-  
-      const statusMsg = document.getElementById("statusMsg");  
-      statusMsg.textContent = "Sending...";  
-      statusMsg.style.color = "#ffd700";  
-  
-      emailjs.send(serviceID, templateID, templateParams)  
-        .then(() => {  
-          statusMsg.textContent = "✅ Request sent successfully! We’ll contact you soon.";  
-          statusMsg.style.color = "#00ff90";  
-          document.getElementById("maintForm").reset();  
-          page2.classList.remove("active");  
-          page1.classList.add("active");  
-        })  
-        .catch((err) => {  
-          console.error(err);  
-          statusMsg.textContent = "❌ Failed to send. Please check your network or EmailJS setup.";  
-          statusMsg.style.color = "red";  
-        });  
-    });  
-  </script>  </body>  
+    footer{margin-top:18px;text-align:center;color:rgba(255,255,255,0.9)}
+
+    /* Success / Error full-screen simple overlay panels for single-file version */
+    .result-panel{display:none;position:fixed;inset:0;z-index:40;align-items:center;justify-content:center}
+    .result-panel.active{display:flex}
+    .result-card{background:rgba(255,255,255,0.10);backdrop-filter:blur(12px);padding:30px;border-radius:16px;text-align:center;max-width:520px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    .result-card h2{margin:0 0 10px 0}
+  </style>
+</head>
+<body>
+  <div class="slideshow" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <main class="page-wrap">
+    <div class="card">
+      <header>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="logo">SF</div>
+          <div>
+            <h1>SmartFix electricals</h1>
+            <div class="subtitle">Fast • Trusted • Professional</div>
+          </div>
+        </div>
+        <div class="contact">
+          <div>Call / WhatsApp: <a href="tel:+233543899210" style="color:#fff;text-decoration:underline">+233 54 389 9210</a></div>
+          <div>Email: <a href="mailto:timothytiekuapawu@gmail.com" style="color:#fff;text-decoration:underline">timothytiekuapawu@gmail.com</a></div>
+        </div>
+      </header>
+
+      <div class="progress" aria-hidden="true"><span id="prog" style="width:33%"></span></div>
+
+      <!-- Step 1 -->
+      <section id="step1" class="step active" aria-label="Step 1">
+        <p class="subtitle" style="margin-bottom:10px">Step 1 — Tell us who you are & what you need</p>
+        <form id="formMain">
+          <div class="row">
+            <div class="col">
+              <label for="user_name">Full Name</label>
+              <input id="user_name" name="user_name" type="text" required placeholder="e.g., John Doe">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="user_phone">Phone Number</label>
+              <input id="user_phone" name="user_phone" type="tel" required placeholder="+233 54 389 9210">
+            </div>
+            <div class="col">
+              <label for="maintenance_type">Type of Maintenance</label>
+              <select id="maintenance_type" name="maintenance_type" required>
+                <option value="">-- Select --</option>
+                <option>Wiring fault / repair</option>
+                <option>Rewiring / new connection</option>
+                <option>Lighting / fan installation</option>
+                <option>Socket outlet installation</option>
+                <option>Fuse box / circuit breaker</option>
+                <option>Generator / inverter</option>
+                <option>Appliance connection</option>
+                <option>Solar PV / battery system</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button type="button" class="btn btn-primary" id="next1">Next ➡</button>
+            <a class="whatsapp" id="quickwhats" target="_blank" href="https://api.whatsapp.com/send?phone=233543899210&text=Hello%20SmartFix%20Electricals%2C%20I%20need%20help.">💬 Quick WhatsApp</a>
+            <div style="margin-left:auto" class="subtitle">Step 1 of 3</div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Step 2 -->
+      <section id="step2" class="step" aria-label="Step 2">
+        <p class="subtitle">Step 2 — Job details</p>
+        <div>
+          <div class="row">
+            <div class="col">
+              <label for="user_email">Email</label>
+              <input id="user_email" name="user_email" type="email" required placeholder="you@example.com">
+            </div>
+            <div class="col">
+              <label for="audience_level">Priority Level</label>
+              <select id="audience_level" name="audience_level" required>
+                <option value="">-- Select Priority --</option>
+                <option>Low (Flexible)</option>
+                <option>Medium (2–3 Days)</option>
+                <option>High (Urgent)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="preferred_datetime">Preferred Date & Time</label>
+              <input id="preferred_datetime" name="preferred_datetime" type="datetime-local">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label for="message">Describe the Problem</label>
+              <textarea id="message" name="message" placeholder="Describe issue..."></textarea>
+            </div>
+          </div>
+
+          <div class="buttons">
+            <button class="btn btn-ghost" id="back1">⬅ Back</button>
+            <button class="btn btn-primary" id="toReview">Review & Send ➡</button>
+            <div style="margin-left:auto" class="subtitle">Step 2 of 3</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Review -->
+      <section id="review" class="step" aria-label="Review">
+        <p class="subtitle">Review your details — confirm before sending</p>
+        <div class="review" id="reviewBox">
+          <!-- items inserted here -->
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
+          <button class="btn btn-ghost" id="editBtn">⬅ Edit</button>
+          <button class="btn btn-primary" id="confirmBtn">✅ Confirm & Send</button>
+          <div id="sending" style="display:none;margin-left:12px">
+            <div class="spinner" aria-hidden="true"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- About / Details section -->
+    <section class="info card" style="margin-top:18px" id="about">
+      <h2 style="margin-top:0;color:var(--accent1)">About SmartFix electricals</h2>
+      <p class="subtitle">SmartFix electricals is a professional electrical maintenance and installation service operating in Accra and surrounding areas. We handle residential and light commercial electrical work with a focus on safety, clarity, and reliability.</p>
+
+      <div class="info-grid" style="margin-top:12px">
+        <div>
+          <h3 style="margin:0 0 8px 0">What an Electrician Does</h3>
+          <ul>
+            <li>Diagnose and repair wiring faults and electrical equipment.</li>
+            <li>Install and replace sockets, switches, lights and fans.</li>
+            <li>Design and implement rewiring for additions or renovations.</li>
+            <li>Troubleshoot fuse boxes, circuit breakers, and RCDs.</li>
+            <li>Install and maintain generators, inverters, and solar PV systems.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="margin:0 0 8px 0">Fields of Work</h3>
+          <ul>
+            <li>Residential wiring & maintenance</li>
+            <li>Commercial electrical installations</li>
+            <li>Solar PV installation and maintenance</li>
+            <li>Generator & inverter installation</li>
+            <li>Electrical safety inspections and testing</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="info card" style="margin-top:18px" id="contact">
+      <h2 style="margin-top:0;color:var(--accent1)">Contact Us</h2>
+      <p class="subtitle"><strong>SmartFix electricals</strong></p>
+      <p class="subtitle">Phone / WhatsApp: <a href="tel:+233543899210" style="color:#fff;text-decoration:underline">+233 54 389 9210</a> — Alt: <a href="tel:+0534448661" style="color:#fff;text-decoration:underline">+053 444 8661</a></p>
+      <p class="subtitle">Email: <a href="mailto:timothytiekuapawu@gmail.com" style="color:#fff;text-decoration:underline">timothytiekuapawu@gmail.com</a></p>
+      <p class="subtitle">Service area: Accra & surrounding areas. Available Mon–Sat.</p>
+    </section>
+
+    <footer><small>© SmartFix electricals</small></footer>
+  </main>
+
+  <!-- Result overlay (single-file version) -->
+  <div id="resultSuccess" class="result-panel">
+    <div class="result-card">
+      <h2 style="color:#00ff90">✅ Request Sent</h2>
+      <p>Thanks for booking with SmartFix electricals. We will contact you soon.</p>
+      <a class="btn btn-primary" href="#" id="rsHome">Back to Home</a>
+    </div>
+  </div>
+
+  <div id="resultError" class="result-panel">
+    <div class="result-card">
+      <h2 style="color:#ff6b6b">❌ Submission Failed</h2>
+      <p>There was an error sending your request. Please check your internet and try again.</p>
+      <a class="btn btn-primary" href="#" id="reTry">Try Again</a>
+    </div>
+  </div>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // keep placeholders - add your public key when ready
+    try { emailjs.init("ad1dHGUf_gonZ5ERG"); } catch(e) { console.warn('EmailJS init', e); }
+
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const review = document.getElementById('review');
+    const prog = document.getElementById('prog');
+
+    document.getElementById('next1').addEventListener('click', ()=>{
+      const name = document.getElementById('user_name').value.trim();
+      const phone = document.getElementById('user_phone').value.trim();
+      const type = document.getElementById('maintenance_type').value;
+      if(!name || !phone || !type){ alert('Please fill Full Name, Phone and Maintenance Type.'); return; }
+      step1.classList.remove('active'); step1.style.display='none';
+      step2.classList.add('active'); step2.style.display='';
+      prog.style.width='66%';
+    });
+
+    document.getElementById('back1').addEventListener('click', ()=>{
+      step2.classList.remove('active'); step2.style.display='none';
+      step1.classList.add('active'); step1.style.display='';
+      prog.style.width='33%';
+    });
+
+    document.getElementById('toReview').addEventListener('click', ()=>{
+      const email = document.getElementById('user_email').value.trim();
+      const priority = document.getElementById('audience_level').value;
+      if(!email || !priority){ alert('Please fill Email and Priority before reviewing.'); return; }
+
+      // build review HTML
+      const data = {
+        user_name: document.getElementById('user_name').value.trim(),
+        user_phone: document.getElementById('user_phone').value.trim(),
+        maintenance_type: document.getElementById('maintenance_type').value,
+        user_email: email,
+        audience_level: priority,
+        preferred_datetime: document.getElementById('preferred_datetime').value || '',
+        message: document.getElementById('message').value.trim() || ''
+      };
+      window.sessionStorage.setItem('smartfix_booking', JSON.stringify(data));
+
+      const box = document.getElementById('reviewBox');
+      box.innerHTML = `
+        <div class="review-item"><strong>Name:</strong> ${escape(data.user_name)}</div>
+        <div class="review-item"><strong>Phone:</strong> ${escape(data.user_phone)}</div>
+        <div class="review-item"><strong>Maintenance Type:</strong> ${escape(data.maintenance_type)}</div>
+        <div class="review-item"><strong>Email:</strong> ${escape(data.user_email)}</div>
+        <div class="review-item"><strong>Priority:</strong> ${escape(data.audience_level)}</div>
+        <div class="review-item"><strong>Preferred Date & Time:</strong> ${escape(data.preferred_datetime || 'Not specified')}</div>
+        <div class="review-item"><strong>Description:</strong> ${escape(data.message || 'No description provided')}</div>
+      `;
+      // show review
+      step2.classList.remove('active'); step2.style.display='none';
+      review.classList.add('active'); review.style.display='';
+      prog.style.width='100%';
+    });
+
+    document.getElementById('editBtn').addEventListener('click', ()=>{
+      // go back to step 2 for edits
+      review.classList.remove('active'); review.style.display='none';
+      step2.classList.add('active'); step2.style.display='';
+      prog.style.width='66%';
+    });
+
+    // Confirm & send (single-file: show result panels)
+    document.getElementById('confirmBtn').addEventListener('click', ()=>{
+      const raw = window.sessionStorage.getItem('smartfix_booking');
+      if(!raw){ alert('No booking found.'); return; }
+      const params = JSON.parse(raw);
+
+      // show spinner and disable button
+      document.getElementById('confirmBtn').disabled = true;
+      document.getElementById('sending').style.display='block';
+
+      const serviceID = "service_972cf37";
+      const templateID = "template_3epza38";
+
+      // fallback if EmailJS not loaded
+      if(typeof emailjs === 'undefined' || !emailjs.send){
+        // simulate success for demo (remove simulation for real send)
+        setTimeout(()=> {
+          document.getElementById('sending').style.display='none';
+          document.getElementById('resultSuccess').classList.add('active');
+          window.sessionStorage.removeItem('smartfix_booking');
+        }, 1000);
+        return;
+      }
+
+      emailjs.send(serviceID, templateID, params)
+        .then(()=> {
+          document.getElementById('sending').style.display='none';
+          document.getElementById('resultSuccess').classList.add('active');
+          window.sessionStorage.removeItem('smartfix_booking');
+        })
+        .catch((err)=> {
+          console.error('EmailJS error', err);
+          document.getElementById('sending').style.display='none';
+          document.getElementById('resultError').classList.add('active');
+        });
+    });
+
+    // Result buttons
+    document.getElementById('rsHome').addEventListener('click', (e)=>{
+      e.preventDefault();
+      document.getElementById('resultSuccess').classList.remove('active');
+      // reset form and go to step1
+      resetToStart();
+    });
+    document.getElementById('reTry').addEventListener('click', (e)=>{
+      e.preventDefault();
+      document.getElementById('resultError').classList.remove('active');
+      resetToStart();
+    });
+
+    function resetToStart(){
+      // reset UI to step1
+      review.classList.remove('active'); review.style.display='none';
+      step2.classList.remove('active'); step2.style.display='none';
+      step1.classList.add('active'); step1.style.display='';
+      prog.style.width='33%';
+      document.getElementById('formMain').reset();
+    }
+
+    // small helpers
+    function escape(s){ if(!s) return ''; return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;') }
+
+    // dynamic quick whatsapp message update
+    ['user_name','user_phone','maintenance_type'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('input', ()=>{
+        const name=document.getElementById('user_name').value.trim()||'[name]';
+        const phone=document.getElementById('user_phone').value.trim()||'[phone]';
+        const type=document.getElementById('maintenance_type').value||'electrical assistance';
+        document.getElementById('quickwhats').href = 'https://api.whatsapp.com/send?phone=233543899210&text=' + encodeURIComponent(Hello SmartFix, my name is ${name} (${phone}). I need ${type}.);
+      });
+    });
+  </script>
+</body>
 </html>
