@@ -1,239 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Timothy Tieku Electrical — Maintenance Booking</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --accent-1: #ffd700;
-  --accent-2: #ff8a00;
-  --accent-3: #ff3d00;
-  --accent-4: #00d4ff;
-  --glass-bg: rgba(255,255,255,0.18);
-  --glass-border: rgba(255,255,255,0.3);
-  --muted: rgba(255,255,255,0.85);
-  --max-width: 900px;
-}
-*{box-sizing:border-box;}
-html,body{height:100%;margin:0;font-family:"Poppins",sans-serif;color:#fff;}
-body{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background: url('https://i.ibb.co/2Y0F0fS/electrician1.jpg') center/cover no-repeat;
-  overflow-x:hidden;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electrical Maintenance Booking</title>
 
-.wrap{
-  width:95%;
-  max-width:var(--max-width);
-  padding:40px;
-  border-radius:25px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(18px) saturate(180%);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-  display:flex;
-  flex-direction:column;
-  gap:30px;
-}
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: linear-gradient(to right, #004e92, #000428);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-h1{
-  margin:0;
-  font-size:2rem;
-  background: linear-gradient(90deg,var(--accent-1),var(--accent-4));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.subtitle{font-size:1rem;color:var(--muted);}
-label{font-size:1rem;font-weight:600;color:var(--accent-4);margin-bottom:6px;display:block;}
-input, select, textarea{
-  width:100%;
-  padding:14px 16px;
-  border-radius:15px;
-  border:2px solid rgba(255,255,255,0.3);
-  font-size:1rem;
-  outline:none;
-  background: rgba(255,255,255,0.95);
-  color: #111;
-  margin-bottom:12px;
-  transition: all 0.3s ease;
-}
-input:focus, select:focus, textarea:focus{
-  border:2px solid var(--accent-3);
-  box-shadow: 0 0 15px rgba(255,61,0,0.5);
-}
-textarea{min-height:120px; resize:vertical;}
-.actions{display:flex;gap:15px;flex-wrap:wrap;align-items:center;margin-top:10px;}
-.btn{padding:14px 20px;border-radius:15px;font-weight:700;cursor:pointer;border:none;transition: transform 0.2s ease, box-shadow 0.2s ease;}
-.btn-primary{background: linear-gradient(135deg,var(--accent-1),var(--accent-2)); color:#000; box-shadow:0 8px 25px rgba(255,138,0,0.5);}
-.btn-primary:hover{transform: translateY(-3px); box-shadow:0 15px 40px rgba(255,138,0,0.7);}
-.btn-ghost{background: linear-gradient(135deg,var(--accent-3),var(--accent-4)); color:#fff; border:1px solid rgba(255,255,255,0.3);}
-.btn-ghost:hover{transform: translateY(-3px); box-shadow:0 12px 35px rgba(0,212,255,0.5);}
-.whatsapp{background:#25D366;color:#fff;text-decoration:none;padding:14px 20px;border-radius:15px;font-weight:700;transition: transform 0.2s ease, box-shadow 0.2s ease;}
-.whatsapp:hover{transform:translateY(-3px); box-shadow:0 10px 25px rgba(37,211,102,0.5);}
-#statusMsg{font-weight:700;height:28px;margin-top:10px;text-align:center;font-size:1rem;}
-.progress{height:10px;background:rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;margin-bottom:18px;}
-.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));width:0%;transition:width 0.4s ease;}
-.page{display:none;}
-.page.active{display:block;}
-</style>
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .left {
+      flex: 1;
+      background: url('https://images.unsplash.com/photo-1603791452906-bb3b5f4d4d93?auto=format&fit=crop&w=900&q=60') no-repeat center/cover;
+      min-height: 100%;
+    }
+
+    .right {
+      flex: 1;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    h2 {
+      text-align: center;
+      color: #00e1ff;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input,
+    select,
+    textarea {
+      margin: 10px 0;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    button {
+      background: #00e1ff;
+      color: #000;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #fff;
+      color: #004e92;
+    }
+
+    .whatsapp-btn {
+      background: #25d366;
+      color: #fff;
+    }
+
+    .whatsapp-btn:hover {
+      background: #128c7e;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .left {
+        height: 200px;
+      }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("ad1dHGUf_gonZ5ERG"); // ✅ Your Public Key
+    })();
+
+    function sendMail(event) {
+      event.preventDefault();
+
+      emailjs
+        .send("service_972cf37", "template_3epza38", {
+          user_name: document.querySelector("#name").value,
+          user_email: document.querySelector("#email").value,
+          user_phone: document.querySelector("#phone").value,
+          user_address: document.querySelector("#address").value,
+          maintenance_type: document.querySelector("#maintenance_type").value,
+          preferred_datetime: document.querySelector("#date").value,
+          audience_level: document.querySelector("#priority").value,
+          message: document.querySelector("#details").value,
+        })
+        .then(
+          function (response) {
+            alert("✅ Request sent successfully! We'll contact you soon.");
+            document.querySelector("form").reset();
+          },
+          function (error) {
+            alert("❌ Failed to send request. Please check your setup.");
+            console.error(error);
+          }
+        );
+    }
+
+    function chatOnWhatsApp() {
+      const name = document.querySelector("#name").value;
+      const phone = document.querySelector("#phone").value;
+      const details = document.querySelector("#details").value;
+
+      const message = Hello, my name is ${name}. My phone is ${phone}. I’d like to book an electrical maintenance service. Details: ${details};
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappURL = https://wa.me/233543899210?text=${encodedMessage};
+      window.open(whatsappURL, "_blank");
+    }
+  </script>
 </head>
+
 <body>
+  <div class="container">
+    <div class="left"></div>
 
-<main class="wrap">
-  <div>
-    <h1>Timothy Tieku Electrical</h1>
-    <div class="subtitle">Fast • Trusted • Professional electrical maintenance</div>
+    <div class="right">
+      <h2>Electrical Maintenance Booking Form</h2>
+
+      <form onsubmit="sendMail(event)">
+        <input type="text" id="name" placeholder="Full Name" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="text" id="phone" placeholder="Phone Number" required />
+        <input type="text" id="address" placeholder="Address" required />
+
+        <select id="maintenance_type" required>
+          <option value="">-- Select Maintenance Type --</option>
+          <option>Wiring Faults or Repairs</option>
+          <option>Rewiring or New Connection</option>
+          <option>Lighting or Fan Installation</option>
+          <option>Socket Outlet Installation</option>
+          <option>Fuse Box or Circuit Breakers</option>
+          <option>Generator or Inverters</option>
+          <option>Appliance Connection</option>
+        </select>
+
+        <input type="datetime-local" id="date" required />
+        <select id="priority" required>
+          <option value="">-- Priority Level --</option>
+          <option>Normal</option>
+          <option>Urgent</option>
+          <option>Emergency</option>
+        </select>
+
+        <textarea id="details" placeholder="Describe the problem..." required></textarea>
+
+        <button type="submit">Send Request</button>
+        <button type="button" class="whatsapp-btn" onclick="chatOnWhatsApp()">Chat on WhatsApp</button>
+      </form>
+    </div>
   </div>
-
-  <div class="progress"><span id="progBar"></span></div>
-
-  <form id="maintForm">
-    <!-- Step 1 -->
-    <div class="page active" id="page1">
-      <label for="user_name">Full Name</label>
-      <input id="user_name" type="text" name="user_name" placeholder="John Doe" required>
-      <label for="user_phone">Phone Number</label>
-      <input id="user_phone" type="tel" name="user_phone" placeholder="+233 54 389 9210" required>
-      <label for="maintenance_type">Type of Maintenance</label>
-      <select id="maintenance_type" name="maintenance_type" required>
-        <option value="">— Choose service —</option>
-        <option>Wiring fault / repair</option>
-        <option>Rewiring / new connection</option>
-        <option>Lighting / fan installation</option>
-        <option>Socket outlet installation</option>
-        <option>Fuse box / circuit breaker</option>
-        <option>Generator / inverter</option>
-        <option>Appliance connection</option>
-        <option>Solar PV / battery system</option>
-        <option>Other</option>
-      </select>
-      <div class="actions">
-        <button type="button" class="btn btn-primary" id="toStep2">Next ➡</button>
-        <a class="whatsapp" id="whatsNow" href="#" target="_blank">💬 Quick WhatsApp</a>
-      </div>
-    </div>
-
-    <!-- Step 2 -->
-    <div class="page" id="page2">
-      <label for="user_email">Email Address</label>
-      <input id="user_email" type="email" name="user_email" placeholder="you@example.com" required>
-      <label for="audience_level">Priority</label>
-      <select id="audience_level" name="audience_level" required>
-        <option value="">— Priority —</option>
-        <option>Low (Flexible)</option>
-        <option>Medium (2–3 Days)</option>
-        <option>High (Urgent)</option>
-      </select>
-      <label for="preferred_datetime">Preferred Date & Time</label>
-      <input id="preferred_datetime" type="datetime-local" name="preferred_datetime">
-      <label for="message">Describe the Problem</label>
-      <textarea id="message" name="message" placeholder="Describe your issue..."></textarea>
-      <div class="actions">
-        <button type="button" class="btn btn-ghost" id="backTo1">⬅ Back</button>
-        <button type="submit" class="btn btn-primary">Send Request</button>
-        <a class="whatsapp" id="whatsLater" href="#" target="_blank">💬 Quick WhatsApp</a>
-      </div>
-    </div>
-
-    <!-- Step 3: Status -->
-    <div class="page" id="page3">
-      <div id="statusMsg"></div>
-      <div class="actions">
-        <button type="button" class="btn btn-primary" id="backToStart">Back to Start</button>
-      </div>
-    </div>
-
-  </form>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-emailjs.init("ad1dHGUf_gonZ5ERG"); // <-- replace
-
-const page1=document.getElementById('page1');
-const page2=document.getElementById('page2');
-const page3=document.getElementById('page3');
-const progBar=document.getElementById('progBar');
-const form=document.getElementById('maintForm');
-
-// Step control buttons
-document.getElementById('toStep2').addEventListener('click',()=>{
-  const name=document.getElementById('user_name').value.trim();
-  const phone=document.getElementById('user_phone').value.trim();
-  const type=document.getElementById('maintenance_type').value;
-  if(!name||!phone||!type){alert("Fill all fields to continue."); return;}
-  page1.classList.remove('active'); page2.classList.add('active');
-  progBar.style.width='50%';
-});
-
-document.getElementById('backTo1').addEventListener('click',()=>{
-  page2.classList.remove('active'); page1.classList.add('active');
-  progBar.style.width='0%';
-});
-
-document.getElementById('backToStart').addEventListener('click',()=>{
-  page3.classList.remove('active'); page1.classList.add('active');
-  progBar.style.width='0%';
-});
-
-// WhatsApp Links
-function updateWhatsNow(){
-  const name=document.getElementById('user_name').value.trim()||"[name]";
-  const phone=document.getElementById('user_phone').value.trim()||"[phone]";
-  const type=document.getElementById('maintenance_type').value||"electrical assistance";
-  document.getElementById('whatsNow').href="https://api.whatsapp.com/send?phone=233543899210&text="+encodeURIComponent(
-    Hello Engineer Timothy Tieku, my name is ${name} and I need ${type}. Phone: ${phone}.
-  );
-}
-function updateWhatsLater(){
-  const name=document.getElementById('user_name').value.trim()||"[name]";
-  const phone=document.getElementById('user_phone').value.trim()||"[phone]";
-  const email=document.getElementById('user_email').value.trim()||"[email]";
-  const priority=document.getElementById('audience_level').value||"[priority]";
-  document.getElementById('whatsLater').href="https://api.whatsapp.com/send?phone=233543899210&text="+encodeURIComponent(
-    Hello Engineer Timothy Tieku, my name is ${name}. Phone: ${phone}. Email: ${email}. Priority: ${priority}.
-  );
-}
-['input','change'].forEach(e=>{form.addEventListener(e,()=>{
-  updateWhatsNow(); updateWhatsLater();
-});});
-updateWhatsNow(); updateWhatsLater();
-
-// Submit via EmailJS
-form.addEventListener('submit',function(e){
-  e.preventDefault();
-  const name=document.getElementById('user_name').value.trim();
-  const phone=document.getElementById('user_phone').value.trim();
-  const type=document.getElementById('maintenance_type').value;
-  const email=document.getElementById('user_email').value.trim();
-  const priority=document.getElementById('audience_level').value;
-  const datetime=document.getElementById('preferred_datetime').value || "Not specified";
-  const message=document.getElementById('message').value.trim() || "No description provided";
-  if(!name||!phone||!type||!email||!priority){alert("Fill all required fields."); return;}
-
-  page2.classList.remove('active'); page3.classList.add('active');
-  progBar.style.width='100%';
-  const statusMsg=document.getElementById('statusMsg');
-
-  const templateParams={user_name:name,user_phone:phone,maintenance_type:type,user_email:email,audience_level:priority,preferred_datetime:datetime,message:message};
-
-  emailjs.send("service_972cf37","template_3epza38",templateParams)
-    .then(()=>{
-      statusMsg.style.color="#00ff90"; 
-      statusMsg.textContent="✅ Request sent successfully!";
-      form.reset();
-      updateWhatsNow(); updateWhatsLater();
-    })
-    .catch((err)=>{
-      console.error(err); 
-      statusMsg.style.color="#ff3d00"; 
-      statusMsg.textContent="❌ Failed to send request. Check EmailJS setup.";
-    });
-});
-</script>
 </body>
 </html>
+
